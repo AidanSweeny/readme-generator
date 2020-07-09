@@ -20,8 +20,12 @@ inquirer
     name: "description"
   },{
     type: "input",
-    message: "How do you install in necessary information?",
+    message: "How and what is required to install this project?",
     name: "installation"
+  },{
+    type: "input",
+    message: "What do others need to do to use this project?",
+    name: "usage"
   },{
     type: "input",
     message: "Who contributed to this project?",
@@ -31,12 +35,17 @@ inquirer
     message: "What is your email?",
     name: "email"
   }])
-  .then(async function({title, description, installation, contributors, email}) {
+  .then(async function({title, description, installation, usage, contributors, email}) {
         try {
-          var string = `#${title}\n`
-          string += "[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://shields.io/)\n"
+          var string = `# ${title}\n`
+          string += `[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://shields.io/)\n`
+          string += `\n## Description\n${description}\n`
+          string += `## Table of Contents\n* [Installation](#installation)\n* [Usage](#usage)\n* [Credits](#credits)\n* [License](#license)\n`
+          string += `\n## Installation\n${installation}\n`
+          string += `\n## Usage\n${usage}\n`
+          string += `\n## Credits\n${contributors}\n`
           console.log(string);
-          // await writeFileAsync("newREADME.md", JSON.stringify(res))
+          await writeFileAsync("newREADME.md", string)
         } 
         catch(err) {
           console.log(err);
